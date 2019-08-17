@@ -6,7 +6,8 @@ module.exports = {
     findSteps,
     add,
     update,
-    remove
+    remove,
+    addStep
 }
 
 function find(){
@@ -25,11 +26,16 @@ function findSteps(id){
         .innerJoin('steps as st', 's.id', 'st.scheme_id' )
         .select('s.id','s.scheme_name', 'st.step_number', 'st.instructions')
         .where({scheme_id: id})
+        .orderBy("st.step_number", "asc")
 }
 
 function add(scheme){
     return db('schemes').insert(scheme) 
-        
+           
+}
+
+function addStep(step){
+    return db('steps').insert(step)
 }
 
 function update(newScheme, id){
